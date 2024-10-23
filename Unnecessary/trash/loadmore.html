@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         .sarkari {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 10px;
+            column-gap: 10px;
+        }
+
+        img {
+            height: 100px;
+            width: 200px;
+
+        }
+
+        .child {
+            width: 198px;
+            background-color: rgb(241, 234, 234);
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container" class="sarkari">
+
+    </div>
+</body>
+<script>
+     const ProductsUrl = 'https://dummyjson.com/products';
+    const AddCart = 'AddToCart';
+    const div = document.querySelector('#container')
+
+  function AddToDom(data) {
+        const innerDv = document.createElement('div');
+        innerDv.setAttribute('class', 'child')
+        const img = document.createElement('img');
+        img.src = `${data.images[0]}`
+        const detail = document.createElement('button');
+        const price = document.createElement('p')
+        price.innerText = `${data.price} $`;
+        detail.innerText = "details";
+        detail.setAttribute('class', 'detail')
+        const buy = document.createElement('button')
+        buy.setAttribute('id', `buy${data.id}`)
+        buy.addEventListener('click', () => {
+            let arr = JSON.parse(localStorage.getItem(AddCart)) ?? []
+            arr.push(data);
+            localStorage.setItem(AddCart, JSON.stringify(arr))
+            arr = [];
+        })
+        buy.innerText = 'Add to Cart'
+        buy.setAttribute('class', 'buy')
+        const h6 = document.createElement('h6');
+        h6.innerText = data.title;
+        innerDv.append(img, h6, price, detail, buy)
+        div.append(innerDv);
+    }
+    
+function LoadProd(arr,j){
+   for(let i=j;i<arr.length && i < (j+6);i++){
+    AddToDom(arr[i]);
+   }
+   if(j+6<arr.length){
+   const btn= document.createElement('button')
+   btn.innerText="Load More"
+   div.append(btn)
+   btn.addEventListener('click',()=>{
+    btn.remove();
+    LoadProd(arr,j+6);
+   })
+}
+}
+    async function BringData() {
+        let data = await fetch(ProductsUrl);
+        data = await data.json();
+       LoadProd(data.products,0);
+        
+    }
+
+    window.onload = BringData;
+</script>
+</html>

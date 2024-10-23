@@ -1,0 +1,115 @@
+{
+    "categories": [
+      {
+        "id": 1,
+        "name": "Electronics",
+        "subcategories": [
+          "Mobile Phones",
+          "Laptops",
+          "Cameras",
+          "Headphones",
+          "Wearable Technology"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Fashion",
+        "subcategories": [
+          "Men's Clothing",
+          "Women's Clothing",
+          "Footwear",
+          "Accessories",
+          "Watches"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Home & Kitchen",
+        "subcategories": [
+          "Furniture",
+          "Home Decor",
+          "Kitchen Appliances",
+          "Cookware",
+          "Bedding"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Beauty & Health",
+        "subcategories": [
+          "Skincare",
+          "Haircare",
+          "Makeup",
+          "Fragrances",
+          "Personal Care"
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Sports & Outdoors",
+        "subcategories": [
+          "Fitness Equipment",
+          "Sportswear",
+          "Camping & Hiking",
+          "Cycling",
+          "Outdoor Gear"
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Toys & Games",
+        "subcategories": [
+          "Action Figures",
+          "Board Games",
+          "Puzzles",
+          "Dolls",
+          "Outdoor Play"
+        ]
+      },
+      {
+        "id": 7,
+        "name": "Books & Stationery",
+        "subcategories": [
+          "Fiction",
+          "Non-Fiction",
+          "Children's Books",
+          "School Supplies",
+          "Office Supplies"
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Automotive",
+        "subcategories": [
+          "Car Accessories",
+          "Motorcycle Parts",
+          "Car Electronics",
+          "Tires & Wheels",
+          "Vehicle Tools"
+        ]
+      },
+      {
+        "id": 9,
+        "name": "Groceries",
+        "subcategories": [
+          "Beverages",
+          "Snacks",
+          "Dairy Products",
+          "Fruits & Vegetables",
+          "Baking Supplies"
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Health & Wellness",
+        "subcategories": [
+          "Vitamins & Supplements",
+          "Fitness Nutrition",
+          "First Aid",
+          "Medical Equipment",
+          "Personal Safety"
+        ]
+      }
+    ]
+  }
+  

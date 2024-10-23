@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The textarea element</h1>
+
+<form action="/action_page.php">
+  <p><label for="w3review">Review of W3Schools:</label></p>
+  <textarea id="w3review" name="w3review" rows="4" cols="50"></textarea>
+  <br>
+  <input type="submit" value="Submit">
+</form>
+
+<p>Click the "Submit" button and the form-data will be sent to a page on the 
+server called "action_page.php".</p>
+
+</body>
+<script>
+document.querySelector('#w3review').addEventListener('keyup',(e)=>{
+console.log(e.target.value)
+}
+)
+</script>
+
+</html>

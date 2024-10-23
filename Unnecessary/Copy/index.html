@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .sarkari {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 10px;
+            column-gap: 10px;
+        }
+
+        img {
+            height: 100px;
+            width: 200px;
+
+        }
+
+        .child {
+            width: 198px;
+            background-color: rgb(241, 234, 234);
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="ShowCart()">Show Cart</button>
+    <div id="container" class="sarkari">
+
+    </div>
+    <h2>Watch your carts</h2>
+    <div id="carts" class="sarkari">
+
+    </div>
+</body>
+<script>
+    var GlobalArr;//-------------------
+    var product;
+    let arr;
+    let maap = {};
+    const AddCart = 'AddToCart';
+    const div = document.querySelector('#container')
+    const cart = document.querySelector('#carts')//------
+
+
+    const RemoveFromCart = ( id, dv) => {//-----------------------
+        dv.remove();//removed from ui
+        let a = JSON.parse(localStorage.getItem(AddCart)) ?? [];
+        a = a.filter((item) => {
+            return item.id != id;
+        })
+        localStorage.setItem(AddCart, JSON.stringify(a));
+    }
+
+    function AddToCartDom(obj, frequency) {//--------------------------------
+        const echPrd = document.createElement('div');
+        echPrd.setAttribute('class', 'child')
+        const title = document.createElement('span')
+        const img = document.createElement('img');
+        img.src = `${obj.images[0]}`
+        title.innerText = obj.title;
+        const p = document.createElement('p')
+        p.innerText = `${obj.price} $`
+        const butMin = document.createElement('button');
+        butMin.innerText = '-';
+        const quantity = document.createElement('p')
+        quantity.innerText = `Quantity: ${frequency}`;
+        const butPls = document.createElement('button');
+        butPls.innerText = '+';
+        const remove = document.createElement('button')
+        remove.addEventListener('click', () => RemoveFromCart( obj.id, echPrd));
+        remove.innerText = 'remove'
+        remove.setAttribute('class', 'remove')
+        echPrd.append(img, title, p, butMin, quantity, butPls, remove);
+        cart.append(echPrd)
+    }
+
+    function ForCartAddDom(objId, frequency) {//------------------------------------
+        GlobalArr.forEach((item) => {//here we can improve search complexity to optimize 
+            if (item.id == objId)
+                AddToCartDom(item, frequency);//Using Global Variable
+        })
+    }
+
+    function ShowCart() {//--------------------------
+        let a = JSON.parse(localStorage.getItem(AddCart))??[];
+        a.forEach((item) => {///uisng global maap
+            if (maap[item.id])
+                maap[item.id]++;
+            else maap[item.id] = 1;
+        })
+        for (let i in maap) {
+            ForCartAddDom(i, maap[i]);
+        }
+    }
+
+    function SendToNextPageForEachProduct(obj){
+          window.location.href=`product.html?item=${JSON.stringify(obj)}`
+    }
+
+    function QuantityAddCart(obj){
+        {
+           let a = JSON.parse(localStorage.getItem(AddCart)) ?? []
+           if(obj.q)
+           obj.q++;
+        else obj.q=1;
+         a=a.filter((item)=>{
+            return obj.id!=item.id;
+         })
+            a.push(obj);
+            localStorage.setItem(AddCart, JSON.stringify(a))
+        }
+    }
+
+    function AddToDom(data) {
+        const innerDv = document.createElement('div');
+        innerDv.setAttribute('class', 'child')
+        const img = document.createElement('img');
+        img.addEventListener('click',()=>SendToNextPageForEachProduct(data))
+        img.src = `${data.images[0]}`
+        const detail = document.createElement('button');
+        const price = document.createElement('p')
+        price.innerText = `${data.price} $`;
+        detail.innerText = "details";
+        detail.setAttribute('class', 'detail')
+        const buy = document.createElement('button')
+        buy.setAttribute('id', `buy${data.id}`)
+        buy.addEventListener('click', () =>QuantityAddCart(data))
+        buy.innerText = 'Add to Cart'
+        buy.setAttribute('class', 'buy')
+        const h6 = document.createElement('h6');
+        h6.innerText = data.title;
+        innerDv.append(img, h6, price, detail, buy)
+        div.append(innerDv);
+
+    }
+
+    async function BringData() {
+        let data = await fetch('https://dummyjson.com/products');
+        data = await data.json();
+        product = data.products;
+        GlobalArr = product;
+        data.products.forEach((item) => {
+            AddToDom(item);
+        });
+    }
+
+    window.onload=BringData;
+</script>
+
+</html>
